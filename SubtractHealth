@@ -35,8 +35,6 @@ public class SubtractHealth : MonoBehaviour
             SubtractHeal();
             yield return new WaitForSecondsRealtime(0.1f);
         }
-
-        yield return null;
     }
 
     private void SubtractHeal()
