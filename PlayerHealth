@@ -3,12 +3,13 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 [RequireComponent(typeof(Image))]
-[RequireComponent (typeof(Player))]
+[RequireComponent(typeof(Player))]
 
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private Image _image;
     [SerializeField] private Player _player;
+
 
     private int _valume;
 
@@ -22,15 +23,15 @@ public class PlayerHealth : MonoBehaviour
         _valume = _player.Healh;
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         Visualize();
     }
 
-    private void Visualize()
+    public void Visualize()
     {
         int _maxHealh = 100;
-        float target = (float) _valume / _maxHealh;
-        _image.DOFillAmount(target,_image.fillAmount);
+        float target = (float)_valume / _maxHealh;
+        _image.DOFillAmount(target, _image.fillAmount);
     }
 }
