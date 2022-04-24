@@ -1,0 +1,59 @@
+using System.Collections;
+using UnityEngine;
+
+public class HealhBarManipulation : Player
+{
+    private float _step = 10.0f;
+    private bool _clickAddButton;
+    private bool _clickSubtractButton;
+    private Coroutine _startManipulation;
+    
+
+    public void ButtonClickAdd()
+    {
+        _clickAddButton = true;
+
+        if (_clickAddButton == true)
+        {
+            _clickSubtractButton = false;
+        }
+
+        _startManipulation = StartCoroutine(StartManipulation());
+    }
+
+    public void ButtonClickSubtract()
+    {
+        _clickSubtractButton = true;
+
+        if (_clickSubtractButton == true)
+        {
+            _clickAddButton = false;
+        }
+
+        _startManipulation = StartCoroutine(StartManipulation());
+    }
+
+    private IEnumerator StartManipulation()
+    {
+        var waitForSecondsRealtime = new WaitForSecondsRealtime(0.1f);
+
+        for (int i = 0; i < _step;i++)
+        {
+            AddingOrSubtracting();
+            yield return waitForSecondsRealtime;
+        }
+    }
+
+    private void AddingOrSubtracting()
+    {
+        if (_clickAddButton)
+        {
+            _image.fillAmount = Mathf.MoveTowards(_image.fillAmount, _step, MaxHealh * Time.deltaTime);
+        }
+
+        if (_clickSubtractButton)
+        {
+            _image.fillAmount = Mathf.MoveTowards(_image.fillAmount, _step, MinHealh * Time.deltaTime);
+        }
+    }
+}
