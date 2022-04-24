@@ -1,36 +1,20 @@
 using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
 
-[RequireComponent(typeof(Image))]
-[RequireComponent (typeof(Player))]
-
-public class ShowPlayerHealth : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    [SerializeField] private Image _image;
-    [SerializeField] private Player _player;
-
-    private int _valume;
-
-    private void Awake()
-    {
-        _image = GetComponent<Image>();
+    private int _healh = 100;
+    
+    public int Healh => _healh;
+    
+   private void TakeDamage()
+   {
+        int damage = 10;
+        _healh -= damage;
     }
 
-    private void Update()
-    {
-        _valume = _player.Healh;
-    }
-
-    private void FixedUpdate()
-    {
-        Visualize();
-    }
-
-    private void Visualize()
-    {
-        int _maxHealh = 100;
-        float target = (float) _valume / _maxHealh;
-        _image.DOFillAmount(target,_image.fillAmount);
-    }
+   private void Healed()
+   {
+       int healed = 10;
+       _healh += healed;
+   }
 }
