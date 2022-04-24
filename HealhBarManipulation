@@ -1,51 +1,23 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class HealhBarManipulation : Player
+[RequireComponent(typeof(Image))]
+[RequireComponent (typeof(Player))]
+
+public class ShowPlayerHealth : MonoBehaviour
 {
-    private float _step = 10.0f;
-    private bool _clickAddButton;
-    private bool _clickSubtractButton;
-    private Coroutine _startManipulation;
-    
-    public void ButtonClickAdd()
+    [SerializeField] private Image _image;
+    [SerializeField] private Player player;
+
+    private void Awake()
     {
-        _clickAddButton = true;
-
-        if (_clickAddButton == true)
-        {
-            _clickSubtractButton = false;
-        }
-
-        _startManipulation = StartCoroutine(StartManipulation());
+        _image = GetComponent<Image>();
     }
 
-    public void ButtonClickSubtract()
+    private void Update()
     {
-        _clickSubtractButton = true;
-
-        if (_clickSubtractButton == true)
-        {
-            _clickAddButton = false;
-        }
-
-        _startManipulation = StartCoroutine(StartManipulation());
-    }
-
-    private IEnumerator StartManipulation()
-    {
-        var waitForSecondsRealtime = new WaitForSecondsRealtime(0.1f);
-
-        for (int i = 0; i < _step;i++)
-        {
-            AddingOrSubtracting();
-            yield return waitForSecondsRealtime;
-        }
-    }
-
-    private void AddingOrSubtracting()
-    {
-        float healhTarget = _clickAddButton == true ? healhTarget = MaxHealh : healhTarget = MinHealh; 
-        _image.fillAmount = Mathf.MoveTowards(_image.fillAmount, _step, healhTarget * Time.deltaTime); 
+        _image.fillAmount = player.HealPlayer;
     }
 }
