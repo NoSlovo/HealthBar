@@ -1,58 +1,36 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
-public class Player : MonoBehaviour
+[RequireComponent(typeof(Image))]
+[RequireComponent (typeof(Player))]
+
+public class ShowPlayerHealth : MonoBehaviour
 {
-    private float _healPlayer = 0;
+    [SerializeField] private Image _image;
+    [SerializeField] private Player _player;
 
-    private float _maxHealh = 1f;
-    private float _minHealh = -1f;
-    private float _step = 10f;
-    private bool _takenDamage;
-    private bool _gotHealed;
+    private int _valume;
 
-    public float HealPlayer { get { return _healPlayer; } private set { _healPlayer = value; } }
-
-
-   public void TakeDamage()
-   {
-        _takenDamage = true;
-
-        if (_takenDamage == true)
-        {
-            _gotHealed = false;
-        }
-
-        StartCoroutine(ControlHealhPlayer());
+    private void Awake()
+    {
+        _image = GetComponent<Image>();
     }
 
-    public void GetHealed()
+    private void Update()
     {
-        _gotHealed = true;
-
-        if (_gotHealed == true)
-        {
-            _takenDamage = false;
-        }
-
-        StartCoroutine(ControlHealhPlayer());
+        _valume = _player.Healh;
     }
 
-    private IEnumerator ControlHealhPlayer()
+    private void FixedUpdate()
     {
-       var waitForSecondsRealtime = new WaitForSecondsRealtime(0.1f);
-       
-       for (int i = 0; i < _step; i++)
-       {
-           AddingOrSubtracting();
-           yield return waitForSecondsRealtime;
-       }
+        Visualize();
     }
 
-    private void AddingOrSubtracting()
+    private void Visualize()
     {
-        float healhTarget = _gotHealed == true ? healhTarget =  _maxHealh : healhTarget = _minHealh;
-        _healPlayer = Mathf.MoveTowards(_healPlayer, _step, healhTarget * Time.deltaTime);
+        int _maxHealh = 100;
+        float target = (float) _valume / _maxHealh;
+        _image.DOFillAmount(target,_image.fillAmount);
     }
 }
