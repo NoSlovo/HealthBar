@@ -5,7 +5,7 @@ using DG.Tweening;
 [RequireComponent(typeof(Image))]
 [RequireComponent (typeof(Player))]
 
-public class ShowPlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private Image _image;
     [SerializeField] private Player _player;
