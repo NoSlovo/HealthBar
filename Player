@@ -1,1 +1,20 @@
+using UnityEngine;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
+
+public class Player : MonoBehaviour
+{
+    [SerializeField] protected Image _image;
+    private float _maxHealh = 1f;
+    private float _minHealh = -1f;
+
+    public float MaxHealh => _maxHealh;
+    public float MinHealh => _minHealh;
+
+    private void Awake()
+    {
+        _image = GetComponent<Image>();
+        _image.fillAmount = _maxHealh / 2;
+    }
+}
