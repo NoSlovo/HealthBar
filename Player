@@ -1,20 +1,58 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
-
 public class Player : MonoBehaviour
 {
-    [SerializeField] protected Image _image;
+    private float _healPlayer = 0;
+
     private float _maxHealh = 1f;
     private float _minHealh = -1f;
+    private float _step = 10f;
+    private bool _takenDamage;
+    private bool _gotHealed;
 
-    public float MaxHealh => _maxHealh;
-    public float MinHealh => _minHealh;
+    public float HealPlayer { get { return _healPlayer; } private set { _healPlayer = value; } }
 
-    private void Awake()
+
+   public void TakeDamage()
+   {
+        _takenDamage = true;
+
+        if (_takenDamage == true)
+        {
+            _gotHealed = false;
+        }
+
+        StartCoroutine(ControlHealhPlayer());
+    }
+
+    public void GetHealed()
     {
-        _image = GetComponent<Image>();
-        _image.fillAmount = _maxHealh / 2;
+        _gotHealed = true;
+
+        if (_gotHealed == true)
+        {
+            _takenDamage = false;
+        }
+
+        StartCoroutine(ControlHealhPlayer());
+    }
+
+    private IEnumerator ControlHealhPlayer()
+    {
+       var waitForSecondsRealtime = new WaitForSecondsRealtime(0.1f);
+       
+       for (int i = 0; i < _step; i++)
+       {
+           AddingOrSubtracting();
+           yield return waitForSecondsRealtime;
+       }
+    }
+
+    private void AddingOrSubtracting()
+    {
+        float healhTarget = _gotHealed == true ? healhTarget =  _maxHealh : healhTarget = _minHealh;
+        _healPlayer = Mathf.MoveTowards(_healPlayer, _step, healhTarget * Time.deltaTime);
     }
 }
