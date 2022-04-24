@@ -8,7 +8,6 @@ public class HealhBarManipulation : Player
     private bool _clickSubtractButton;
     private Coroutine _startManipulation;
     
-
     public void ButtonClickAdd()
     {
         _clickAddButton = true;
@@ -46,14 +45,7 @@ public class HealhBarManipulation : Player
 
     private void AddingOrSubtracting()
     {
-        if (_clickAddButton)
-        {
-            _image.fillAmount = Mathf.MoveTowards(_image.fillAmount, _step, MaxHealh * Time.deltaTime);
-        }
-
-        if (_clickSubtractButton)
-        {
-            _image.fillAmount = Mathf.MoveTowards(_image.fillAmount, _step, MinHealh * Time.deltaTime);
-        }
+        float healhTarget = _clickAddButton == true ? healhTarget = MaxHealh : healhTarget = MinHealh; 
+        _image.fillAmount = Mathf.MoveTowards(_image.fillAmount, _step, healhTarget * Time.deltaTime); 
     }
 }
