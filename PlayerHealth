@@ -9,12 +9,15 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Image _image;
     [SerializeField] private Player _player;
 
-    private int _valume;
-
     private void Awake()
     {
-        _image.fillAmount = _player.Healh;
-        _image = GetComponent<Image>();
+        _image.fillAmount = (float)_player.Healh / _player.MaxHeale;
+        _image = GetComponent<Image>();  
+    }
+
+    private void Start()
+    {
+        _player.ChangingLives += Visualize;
     }
 
     public void Visualize()
