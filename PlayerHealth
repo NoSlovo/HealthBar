@@ -2,9 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-
 [RequireComponent(typeof(Image))]
-[RequireComponent(typeof(Player))]
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -21,9 +19,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Visualize()
     {
-        _valume = _player.Healh;
-        int _maxHealh = 100;
-        float target = (float)_valume / _maxHealh;
+        float target = (float) _player.Healh / _player.MaxHeale;
         _image.DOFillAmount(target, _image.fillAmount);
     }
 }
