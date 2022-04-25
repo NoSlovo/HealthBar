@@ -15,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
+        _image.fillAmount = _player.Healh;
         _image = GetComponent<Image>();
     }
 
