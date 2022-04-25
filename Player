@@ -4,22 +4,41 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     [SerializeField] private UnityEvent _livesHaveChanged;
+    [SerializeField] private int _damage;
+    [SerializeField] private int _healed;
 
     private int _healh = 100;
+    private int _maxHeale = 100;
+    private int _minHeale = 0;
 
     public int Healh => _healh;
 
     private void TakeDamage()
     {
-        int damage = 10;
-        _healh -= damage;
-        _livesHaveChanged?.Invoke();
+        if (_healh > _minHeale && _damage > 0)
+        {
+            _healh -= _damage;
+            _livesHaveChanged?.Invoke();
+
+            if (_healh < 0)
+            {
+                _healh = 0;
+            }
+        }
     }
 
     private void Healed()
     {
-        int healed = 10;
-        _healh += healed;
-        _livesHaveChanged?.Invoke();
+        if (_maxHeale > _healh && _healed > 0)
+        {
+            _healh += _healed;
+            _livesHaveChanged?.Invoke();
+
+            if (_healh > _maxHeale)
+            {
+                _healh = _maxHeale;
+            }
+
+        }
     }
 }
