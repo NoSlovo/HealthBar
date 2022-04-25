@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+
 [RequireComponent(typeof(Image))]
 [RequireComponent(typeof(Player))]
 
@@ -15,11 +16,6 @@ public class PlayerHealth : MonoBehaviour
     private void Awake()
     {
         _image = GetComponent<Image>();
-    }
-
-    private void LateUpdate()
-    {
-        Visualize();
     }
 
     public void Visualize()
