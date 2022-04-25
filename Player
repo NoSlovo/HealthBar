@@ -3,42 +3,38 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private UnityEvent _livesHaveChanged;
     [SerializeField] private int _damage;
-    [SerializeField] private int _healed;
+    [SerializeField] private int _health;
 
+    private UnityEvent _livesHaveChanged;
     private int _healh = 100;
     private int _maxHeale = 100;
     private int _minHeale = 0;
 
     public int Healh => _healh;
+    public int MaxHeale => _maxHeale;
+    public UnityAction ChangingLives;
 
-    private void TakeDamage()
+    public void TakeDamage()
     {
         if (_healh > _minHeale && _damage > 0)
         {
             _healh -= _damage;
-            _livesHaveChanged?.Invoke();
 
             if (_healh < 0)
             {
                 _healh = 0;
             }
         }
+        ChangingLives?.Invoke();
     }
 
-    private void Healed()
+    public void Healed()
     {
-        if (_maxHeale > _healh && _healed > 0)
+        if (_maxHeale > _healh && _health > 0)
         {
-            _healh += _healed;
-            _livesHaveChanged?.Invoke();
-
-            if (_healh > _maxHeale)
-            {
-                _healh = _maxHeale;
-            }
-
+          _healh = _healh > _maxHeale ? Mathf.Clamp(_healh,_minHeale, _maxHeale) : _healh += _health;
         }
+        ChangingLives?.Invoke();
     }
 }
