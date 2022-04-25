@@ -10,17 +10,11 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private Image _image;
     [SerializeField] private Player _player;
 
-
     private int _valume;
 
     private void Awake()
     {
         _image = GetComponent<Image>();
-    }
-
-    private void Update()
-    {
-        _valume = _player.Healh;
     }
 
     private void LateUpdate()
@@ -30,6 +24,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Visualize()
     {
+        _valume = _player.Healh;
         int _maxHealh = 100;
         float target = (float)_valume / _maxHealh;
         _image.DOFillAmount(target, _image.fillAmount);
